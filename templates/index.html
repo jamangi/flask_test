@@ -4,28 +4,93 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>Your Potato Page</title>
+
+    <!-- Link to Bootstrap CSS for styling and grid system -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+        /* Customizable color scheme */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --text-color: #333;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        .potatoes_card {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation bar styling */
+        nav {
+            margin-bottom: 20px;
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+        }
+
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: var(--text-color);
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Bar using Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/potato_bot">Potatoes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/potato_bot/create">Create</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     {% if current_user %}
         <img src="{{current_user.avatar_url}}" style="height: 200px; width: 200px; border-radius: 50%;">
         <p>Logged in as {{current_user.username}}</p>
-        <p>ID: {{current_user.id}}</p><br/>
 
-        {% for potato in potatoes %}
-        <div class="potatoes_card">
-            <li>Potato Name: {{potato.name}} </li>
-            <li>Type: {{potato.potato_type}}</li>
-            <li>Price: {{potato.price}}</li>
-            <li>Accomplishment: {{potato.accomplishment}}</li>
-            <li>Date: {{potato.date}}</li>
+        <div class="row">
+            {% for potato in potatoes %}
+                <div class="col-md-4">
+                    <div class="potatoes_card">
+                        <ul>
+                            <li>Potato Name: {{potato.name}} </li>
+                            <li>Type: {{potato.potato_type}}</li>
+                            <li>Price: {{potato.price}}</li>
+                            <li>Accomplishment: {{potato.accomplishment}}</li>
+                            <li>Date: {{potato.date}}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        <br/>
-        {% endfor %}
 
-        <a href="/logout"><button>Logout</button></a>
+        <a href="/logout"><button class="btn btn-danger">Logout</button></a>
     {% else %}
-        <a href="{{oauth_uri}}"><button>Login with Discord</button></a>
+        <a href="{{oauth_uri}}"><button class="btn btn-primary">Login with Discord</button></a>
     {% endif %}
+
+    <!-- Link to Bootstrap JS and Popper.js for Bootstrap functionality -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
