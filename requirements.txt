@@ -17,3 +17,9 @@ Flask-WTF
 # Automated tests
 pytest
 pytest-cov
+
+# Discord
+Zenora
+
+# Other
+python-decouple
