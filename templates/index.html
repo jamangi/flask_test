@@ -8,28 +8,25 @@
 
     <!-- Link to Bootstrap CSS for styling and grid system -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 
     <style>
         /* Customizable color scheme */
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
+            --primary-color: #c490d1;
+            --secondary-color: #E5FCFF;
             --text-color: #333;
         }
 
         body {
             background-color: var(--primary-color);
-            color: var(--text-color);
+            color: var(--secondary-color);
             padding: 20px;
         }
 
         .potatoes_card {
             background-color: var(--secondary-color);
             color: var(--text-color);
-            padding: 15px;
-            margin: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         /* Navigation bar styling */
@@ -71,6 +68,7 @@
             {% for potato in potatoes %}
                 <div class="col-md-4">
                     <div class="potatoes_card">
+                        <span class="delete-button" onclick="deletePotato('{{ potato.date }}')">X</span>
                         <ul>
                             <li>Potato Name: {{potato.name}} </li>
                             <li>Type: {{potato.potato_type}}</li>
@@ -92,5 +90,13 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        function deletePotato(date) {
+            var confirmation = confirm("Are you sure you want to delete this potato?");
+            if (confirmation) {
+                window.location.href = "/potato_bot/delete?date=" + encodeURIComponent(date);
+            }
+        }
+    </script>
 </body>
 </html>

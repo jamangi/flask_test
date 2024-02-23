@@ -61,11 +61,16 @@ def create():
     return redirect('/potato_bot')
 
 
-@app.route('/potato_bot/delete', methods=["POST"])
+@app.route('/potato_bot/delete', methods=["GET"])
 def delete():
+    global all_potatoes
     bearer_client = APIClient(session.get('token'), bearer=True)
     current_user = bearer_client.users.get_current_user()
     user_id = current_user.id
+    potato_date = request.args.get('date')
+    potatoes_to_delete = potato_functions.find_potato(potato_date, user_id, all_potatoes)
+    all_potatoes = potato_functions.delete_potato(potatoes_to_delete, all_potatoes)
+    potato_functions.save_potatoes(all_potatoes, potato_functions.database_filename)
     return redirect('/potato_bot')
 
 
