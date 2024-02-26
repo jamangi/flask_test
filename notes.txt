@@ -1,0 +1,36 @@
+1. Log into server
+2. Download gunicorn
+3. clone repo
+4. copy .env file from local
+5. edit .env to have the domain name as the callback uri
+6. update discord developers to have domain name callback urls
+7. pip install -r requirements.txt
+8. use the wsgi gunicorn technique
+	- create a wsgi.py file
+	- import app from the flask module
+	- run the app
+	- can use the gunicorn command to test that it works
+9. sudo chmod 775 /home/ec2-user/
+	- Somehow this helps nginx read the unix socket gunincorn creates
+10. create the systemd for gunincorn
+	- sudo vim /etc/systemd/system/potato_bot_flask.service
+	- using a group www-data crashes it for some reason
+	- sudo systemctl daemon-reload
+	- sudo systemctl start potato_bot_flask
+	- sudo systemctl status potato_bot_flask
+11. Create the nginx file
+	- create a new location block
+	- sudo nginx -t
+	- sudo systemctl restart nginx
+12. Hard code the static folder in nginx to the project static folder
+	- sudo ln -s /home/ec2-user/flask_test/static /usr/share/nginx/html/static
+	- This is because the root set in the / location is what flask uses
+	- This means that websites with the same domain, and thus same server block, will likely require the same root
+
+
+Code changes:
+1. app run needs to specify 0.0.0.0
+
+To Study:
+1. The ExecStart command necessary for running gunicorn with systemd
+- ExecStart=/home/ec2-user/.local/bin/gunicorn --workers 3 --bind unix:flask_test.sock -m 007 wsgi:app
