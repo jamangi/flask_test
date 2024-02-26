@@ -25,7 +25,8 @@ client = APIClient(TOKEN, client_secret=CLIENT_SECRET)
 
 @app.route('/')
 def hello_world():
-    return 'go to /potato_bot'
+    return redirect('http://astriddarkstorm.com/index.html')
+    #return 'go to /potato_bot'
 
 
 @app.route('/potato_bot', methods=["GET"])
